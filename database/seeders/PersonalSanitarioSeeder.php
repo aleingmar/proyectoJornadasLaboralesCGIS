@@ -18,12 +18,12 @@ class PersonalSanitarioSeeder extends Seeder
 
         DB::table('personal_sanitarios')->insert([
             [
-                'profesion' => "Médicos",
+                'profesion' => "Médico",
                 'cargo' => 'Jefe de Guardia',
                 'user_id' => 1
             ],
             [
-                'profesion' => "Enfermeros",
+                'profesion' => "Enfermero",
                 'cargo' => 'Jefe de Guardia',
                 'user_id' => 2
             ],

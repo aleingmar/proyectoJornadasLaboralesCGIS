@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Http\Requests\StorePersonalSanitarioRequest;
 use App\Http\Requests\UpdatePersonalSanitarioRequest;
 use App\Models\PersonalSanitario;
 
 class PersonalSanitarioController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(PersonalSanitario::class, 'personal_sanitario');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +24,10 @@ class PersonalSanitarioController extends Controller
     public function index()
     {
         //
+        $personal_sanitarios = PersonalSanitario::paginate(25);
+        return view('/personalsanitarios/index', ['personal_sanitarios' => $personal_sanitarios]);
+
+
     }
 
     /**
@@ -26,6 +38,7 @@ class PersonalSanitarioController extends Controller
     public function create()
     {
         //
+     
     }
 
     /**

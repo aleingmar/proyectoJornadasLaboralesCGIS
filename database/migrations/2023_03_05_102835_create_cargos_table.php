@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('personal_sanitarios', function (Blueprint $table) {
+        Schema::create('cargos', function (Blueprint $table) {
             $table->id();
-            $table->string('profesion');
-            $table->string('cargo');
-            $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
-            $table->softDeletes();
-
-
+            $table->string('nombre');
+            $table->timestamps();
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personal_sanitarios');
+        Schema::dropIfExists('cargos');
     }
 };
