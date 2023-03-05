@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'telefono'
     ];
 
     /**
@@ -41,35 +42,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function medico()
+    public function personal_sanitario()
     {
-        return $this->hasOne(Medico::class);
+        return $this->hasOne(PersonalSanitario::class);
     }
 
-    public function paciente()
-    {
-        return $this->hasOne(Paciente::class);
-    }
+    
+    #https://laravel.com/docs/8.x/eloquent-mutators)
+    
+    #Creo que no sirve para nada
 
-    /* Las funciones que se llaman getXXXXAttribute se llaman accesors y
-     permiten su acceso mediante llamada como parámetro mágico:
-    $user->tipo_usuario_id
-    (https://laravel.com/docs/8.x/eloquent-mutators)
-    */
-    public function getTipoUsuarioIdAttribute(){
-        if ($this->medico()->exists()){
-            return 1;
-        }
-        elseif($this->paciente()->exists()){
-            return 2;
-        }
-        else{
-            return 3;
-        }
-    }
+    #public function getProfesionAttribute(){return $this->personal_sanitario()::getProfesionAttribute;}
 
-    public function getTipoUsuarioAttribute(){
-        $tipos_usuario = [1 => trans('Médico'), 2 => trans('Paciente'), 3 => trans('Administrador')];
-        return $tipos_usuario[$this->tipo_usuario_id];
-    }
+
+    public function getTipoUsuarioAttribute(){ //cargo
+
+        return $this->personal_sanitario()::getCargoAttribute;
+ 
+     }
+
+
+    
 }

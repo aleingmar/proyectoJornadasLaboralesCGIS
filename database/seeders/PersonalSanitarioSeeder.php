@@ -15,5 +15,20 @@ class PersonalSanitarioSeeder extends Seeder
     public function run()
     {
         //
+
+        DB::table('personal_sanitarios')->insert([
+            [
+                'profesion' => "Médicos",
+                'cargo' => 'Jefe de Guardia',
+                'user_id' => 1
+            ],
+            [
+                'profesion' => "Enfermeros",
+                'cargo' => 'Jefe de Guardia',
+                'user_id' => 2
+            ],
+        ]);
+
+
     }
 }

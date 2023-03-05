@@ -16,6 +16,11 @@ return new class extends Migration
         Schema::create('acceso_centros', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->dateTime('entrada');
+            $table->dateTime('salida');
+            $table->foreignId('personal_sanitario_id')->unique()->constrained()->onDelete('cascade');
+
+
         });
     }
 

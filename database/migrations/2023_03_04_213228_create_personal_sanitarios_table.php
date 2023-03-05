@@ -15,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('personal_sanitarios', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('profesion');
+            $table->string('cargo');
+            $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
+            $table->softDeletes();
+
+
         });
     }
 
