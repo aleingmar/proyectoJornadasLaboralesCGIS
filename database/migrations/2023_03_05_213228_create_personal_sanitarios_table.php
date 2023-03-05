@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('personal_sanitarios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cargo');
-            $table->foreignId('profesion');
+            $table->foreignId('cargo_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('profesion_id')->nullable()->constrained()->onDelete('set null');
             #$table->enum('profesion', ['Médico', 'Enfermero']);
             #$table->enum('cargo', ['Jefe de Guardia', 'Residente', 'Especialista', 'Dirección']);
             $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');

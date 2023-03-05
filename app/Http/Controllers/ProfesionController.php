@@ -15,7 +15,8 @@ class ProfesionController extends Controller
      */
     public function index()
     {
-        //
+        $profesiones = Especialidad::paginate(25);
+        return view('/profesiones/index', ['profesiones' => $profesiones]);
     }
 
     /**
@@ -25,7 +26,9 @@ class ProfesionController extends Controller
      */
     public function create()
     {
-        //
+        {
+            return view('profesiones/create');
+        }
     }
 
     /**
@@ -36,7 +39,15 @@ class ProfesionController extends Controller
      */
     public function store(StoreProfesionRequest $request)
     {
-        //
+        $this->validate($request, [
+            'nombre' => 'required|string|max:255',
+        ], [
+            'nombre.required' => 'La profesion es obligatoria',
+        ]);
+        $profesion = new Profesion($request->all());
+        $profesion->save();
+        session()->flash('success', 'Profesion creada correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
+        return redirect()->route('profesions.index');
     }
 
     /**

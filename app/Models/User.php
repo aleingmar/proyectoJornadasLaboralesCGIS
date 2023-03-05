@@ -48,6 +48,9 @@ class User extends Authenticatable
     }
 
     
+    # DUDA
+
+
     #https://laravel.com/docs/8.x/eloquent-mutators)
     
     #Creo que no sirve para nada
@@ -55,9 +58,11 @@ class User extends Authenticatable
     #public function getProfesionAttribute(){return $this->personal_sanitario()::getProfesionAttribute;}
 
 
+
+    
     public function getTipoUsuarioAttribute(){ //cargo
 
-        return $this->personal_sanitario()::getCargoAttribute;
+        return $this->personal_sanitario()->cargo()->nombre;
  
      }
 

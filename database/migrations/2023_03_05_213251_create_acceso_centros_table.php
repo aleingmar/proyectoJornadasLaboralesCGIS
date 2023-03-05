@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->dateTime('entrada');
             $table->dateTime('salida');
-            $table->foreignId('personal_sanitario_id')->unique()->constrained()->onDelete('cascade');
+            $table->foreignId('personal_sanitario_id')->constrained()->onDelete('cascade');
 
 
         });

@@ -21,18 +21,20 @@ class PersonalSanitario extends Model
 
     #public function especialidad(){return $this->belongsTo(Especialidad::class);}
 
-    public function accesos(){
+    public function accesos_centro(){
         return $this->hasMany(AccesoCentro::class);
     }
 
-
-    public function getProfesionAttribute(){
-        return $this->profesion;
+    public function cargo(){
+        return $this->belongsTo(Cargo::class);
     }
 
-    public function getCargoAttribute(){
-        return $this->cargo;
+    public function profesion(){
+        return $this->belongsTo(Profesion::class);
     }
+
+
+
 
     //
 

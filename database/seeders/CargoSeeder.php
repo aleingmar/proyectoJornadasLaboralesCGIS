@@ -14,6 +14,19 @@ class CargoSeeder extends Seeder
      */
     public function run()
     {
-        //
+         DB::table('cargos')->insert([
+            [
+                'nombre' => "Jefe de Guardia",
+            ],
+            [
+                'nombre' => "Dirección",
+            ],
+            [
+                'nombre' => "Jefe de Residentes",
+            ],
+            [
+                'nombre' => "Residente",
+            ],
+        ]);
     }
 }

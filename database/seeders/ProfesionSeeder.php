@@ -14,6 +14,14 @@ class ProfesionSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('profesions')->insert([
+            [
+                'nombre' => "Enfermero",
+            ],
+            [
+                'nombre' => "Médico",
+            ],
+           
+        ]);
     }
 }

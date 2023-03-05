@@ -13,8 +13,12 @@ class AccesoCentro extends Model
     protected $fillable = ['entrada', 'salida', 'personal_sanitario_id'];
 
     #protected $casts = [];
+    protected $casts = [
+        'entrada' => 'datetime:Y-m-d H:i',
+        'salida' => 'datetime:Y-m-d H:i',
+    ];
 
-    public function personalSanitario(){
+    public function personal_sanitario(){
         return $this->belongsTo(PersonalSanitario::class);
     }
 

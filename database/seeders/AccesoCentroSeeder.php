@@ -15,7 +15,7 @@ class AccesoCentroSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('citas')->insert([
+        DB::table('acceso_centros')->insert([
             [
                 'personal_sanitario_id' => 1,
                 'entrada' => '2021-05-30 07:15:00',
