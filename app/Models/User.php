@@ -64,7 +64,7 @@ class User extends Authenticatable
     
     public function getTipoUsuarioAttribute(){ //cargo
 
-        return $this->personal_sanitario()->cargo()->nombre;
+        return $this->personal_sanitario()::getCargo()->nombre;
  
      }
 

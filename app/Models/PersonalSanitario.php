@@ -15,6 +15,7 @@ class PersonalSanitario extends Model
 
     #protected $casts = [];
 
+    #/////////////////// RELACIOMES ---> con esto simplemente creamos las relaciones entre los modelos
     public function user(){
         return $this->belongsTo(User::class);
     }
@@ -35,8 +36,18 @@ class PersonalSanitario extends Model
 
 
 
+    #/////////////////// QUERYS ---> cunsultas usando elORM de eloquence
 
-    //
+    public function getAccesos(){
+        return $this-> accesos_centro()::all();
+    }
+
+    public function getCargo(){
+        return $this-> cargo()::all();
+    }
+
+
+    
 
     #public function getDiasContratadoAttribute(){return Carbon::now()->diffInDays($this->fecha_contratacion);}
 
