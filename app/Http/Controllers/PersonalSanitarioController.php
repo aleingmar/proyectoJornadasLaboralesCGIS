@@ -25,7 +25,7 @@ class PersonalSanitarioController extends Controller
     {
         //
         $personal_sanitarios = PersonalSanitario::paginate(25);
-        return view('/personalsanitarios/index', ['personal_sanitarios' => $personal_sanitarios]);
+        return view('/personal_sanitarios/index', ['personal_sanitarios' => $personal_sanitarios]);
 
 
     }
@@ -38,6 +38,9 @@ class PersonalSanitarioController extends Controller
     public function create()
     {
         //
+        $cargos = Cargo::all();
+        $profesiones = Profesion::all();
+        return view('personal_sanitarios/create', ['cargos' => $cargos, 'profesiones' => $profesiones]);
      
     }
 

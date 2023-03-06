@@ -59,6 +59,8 @@ class User extends Authenticatable
 
 
 
+
+    //no estoy seguro de si es personal_sanitario()->cargo() o personal_sanitario()::cargo()
     
     public function getTipoUsuarioAttribute(){ //cargo
 

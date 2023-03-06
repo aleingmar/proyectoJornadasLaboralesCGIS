@@ -34,7 +34,7 @@
                                 <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Registrarse</a>
                             @endif
                             @if (Route::has('register-medico'))
-                                <a href="{{ route('register-medico') }}" class="ml-4 text-sm text-gray-700 underline">Registrarse como médico</a>
+                                <a href="{{ route('register-medico') }}" class="ml-4 text-sm text-gray-700 underline">Registrarse como personal sanitario</a>
                             @endif
                         @endauth
                     </div>
@@ -139,13 +139,14 @@
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     <div style="padding:1em 25em;">
-                        <img  style="width:100%;" src="https://www.informatica.us.es/docs/imagen-etsii/logo-ETSII-US-Vertical-Color.png">
+                        <img  style="width:100%;" src="https://blogsaverroes.juntadeandalucia.es/eiadelfa/files/2020/12/LOGO-JUNTA-ANDALUCIA-2.png">
+                        
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-1">
                         <div class="p-6">
                             <div class="flex items-center">
                                 <div class="text-lg leading-7 font-semibold text-center block" style="width: 100%">
-                                    <a target="_blank" href="https://github.com/DamianUS/cgis-2021" class="underline text-gray-900 dark:text-white">Proyecto citas de ejemplo de CGIS 2021/22</a>
+                                    <a target="_blank" href="https://github.com/aleingmar/proyectoJornadasLaboralesCGIS.git" class="underline text-gray-900 dark:text-white">Proyecto Jornadas Laborales - CGIS 2022/23</a>
                                 </div>
                             </div>
 
