@@ -15,7 +15,7 @@ class PersonalSanitarioSeeder extends Seeder
     public function run()
     {
         //
-
+        //las tablas se llaman como los modelos pero con una s mas 
         DB::table('personal_sanitarios')->insert([
             [
                 'profesion' => "Médico",

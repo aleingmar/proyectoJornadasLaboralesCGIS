@@ -15,7 +15,8 @@ class CargoController extends Controller
      */
     public function index()
     {
-        //
+        $cargos = Cargo::paginate(25);
+        return view('/cargos/index', ['cargos' => $cargos]);
     }
 
     /**
@@ -25,7 +26,7 @@ class CargoController extends Controller
      */
     public function create()
     {
-        //
+        return view('cargos/create');
     }
 
     /**
@@ -36,7 +37,16 @@ class CargoController extends Controller
      */
     public function store(StoreCargoRequest $request)
     {
-        //
+        $this->validate($request, [
+            'nombre' => 'required|string|max:255',
+        ], [
+            'nombre.required' => 'El cargo es obligatoria',
+        ]);
+        $cargo = new Cargo($request->all());
+        $cargo->save();
+        session()->flash('success', 'Cargo creada correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
+        //pk se llama asi la ruta?
+        return redirect()->route('cargos.index');
     }
 
     /**
@@ -58,7 +68,7 @@ class CargoController extends Controller
      */
     public function edit(Cargo $cargo)
     {
-        //
+        return view('cargos/edit', ['cargo' => $cargo]);
     }
 
     /**
@@ -70,7 +80,14 @@ class CargoController extends Controller
      */
     public function update(UpdateCargoRequest $request, Cargo $cargo)
     {
-        //
+        $this->validate($request, [
+            'nombre' => 'required|string|max:255',
+       ],
+        )
+       $cargo->fill($request->all());
+       $cargo->save();
+       session()->flash('success', 'Cargo modificada correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
+       return redirect()->route('cargos.index');
     }
 
     /**
@@ -81,6 +98,12 @@ class CargoController extends Controller
      */
     public function destroy(Cargo $cargo)
     {
-        //
+        if($cargo->delete()) {
+            session()->flash('success', 'Cargo borrada correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
+        }
+        else{
+            session()->flash('warning', 'No pudo borrarse el cargo.');
+        }
+        return redirect()->route('cargos.index');
     }
 }

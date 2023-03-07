@@ -11,11 +11,12 @@ class PersonalSanitario extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['profesion', 'cargo'];
+    protected $fillable = ['profesion_id', 'cargo_id'];
 
     #protected $casts = [];
 
-    #/////////////////// RELACIOMES ---> con esto simplemente creamos las relaciones entre los modelos
+    #/////////////////// RELACIOMES ---> con esto creamos las relaciones entre los modelos y obtenemos
+    // las entidades relacionadas
     public function user(){
         return $this->belongsTo(User::class);
     }
@@ -36,14 +37,29 @@ class PersonalSanitario extends Model
 
 
 
-    #/////////////////// QUERYS ---> cunsultas usando elORM de eloquence
+    #/////////////////// QUERYS ---> cunsultas usando el ORM de eloquence
+
+    public function getTiempoTrabajado(){
+        $accesos= $this-> accesos_centro()->get();
+        $res=0;
+        foreach ($accesos as $acceso) {
+            $res= $res + $acceso->getHorasJornadaAttribute();
+            
+        }
+        return $res;
+
+    }
+
+
+
+    //duda
 
     public function getAccesos(){
-        return $this-> accesos_centro()::all();
+        return $this-> accesos_centro()->get();
     }
 
     public function getCargo(){
-        return $this-> cargo()::all();
+        return $this-> cargo()->all();
     }
 
 

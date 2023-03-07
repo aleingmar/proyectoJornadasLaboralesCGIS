@@ -15,7 +15,7 @@ class ProfesionController extends Controller
      */
     public function index()
     {
-        $profesiones = Especialidad::paginate(25);
+        $profesiones = Profesion::paginate(25);
         return view('/profesiones/index', ['profesiones' => $profesiones]);
     }
 
@@ -47,7 +47,12 @@ class ProfesionController extends Controller
         $profesion = new Profesion($request->all());
         $profesion->save();
         session()->flash('success', 'Profesion creada correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
+        //pk se llama asi la ruta?
         return redirect()->route('profesions.index');
+
+
+
+
     }
 
     /**
@@ -58,7 +63,8 @@ class ProfesionController extends Controller
      */
     public function show(Profesion $profesion)
     {
-        //
+        // no tiene show (no vamos a querer ver un detalle en concreto de una profesion no tiene sentido 
+        //solo tiene un nombre)
     }
 
     /**
@@ -69,7 +75,7 @@ class ProfesionController extends Controller
      */
     public function edit(Profesion $profesion)
     {
-        //
+        return view('profesiones/edit', ['profesion' => $profesion]);
     }
 
     /**
@@ -81,7 +87,14 @@ class ProfesionController extends Controller
      */
     public function update(UpdateProfesionRequest $request, Profesion $profesion)
     {
-        //
+        $this->validate($request, [
+            'nombre' => 'required|string|max:255',
+       ],
+        )
+       $profesion->fill($request->all());
+       $profesion->save();
+       session()->flash('success', 'Profesion modificada correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
+       return redirect()->route('profesions.index');
     }
 
     /**
@@ -92,6 +105,12 @@ class ProfesionController extends Controller
      */
     public function destroy(Profesion $profesion)
     {
-        //
+        if($profesion->delete()) {
+            session()->flash('success', 'Profesion borrada correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
+        }
+        else{
+            session()->flash('warning', 'No pudo borrarse la profesion.');
+        }
+        return redirect()->route('profesions.index');
     }
 }

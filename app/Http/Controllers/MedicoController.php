@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class MedicoController extends Controller
 {
-
+    //sirve para autorizar el acceso al controlador de un modelo de médico
     public function __construct()
     {
         $this->authorizeResource(Medico::class, 'medico');

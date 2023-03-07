@@ -16,7 +16,7 @@ class AccesoCentroSeeder extends Seeder
     {
         //
         DB::table('acceso_centros')->insert([
-            [
+            [ //no se si es personal_sanitario_id o PersonalSanitario_id
                 'personal_sanitario_id' => 1,
                 'entrada' => '2021-05-30 07:15:00',
                 'salida' => '2021-05-30 15:30:10',

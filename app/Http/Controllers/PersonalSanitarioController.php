@@ -53,6 +53,35 @@ class PersonalSanitarioController extends Controller
     public function store(StorePersonalSanitarioRequest $request)
     {
         //
+
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed|min:8',
+            'telefono' => 'required|integer|digits:9',
+            'cargo_id' => 'required|exists:cargos,id',
+            'profesion_id' => 'required|exists:profesions,id',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'telefono' => $request->telefono,
+        ]);
+
+        //DUDA
+
+        $personal_sanitario = new PersonalSanitario($request->all());
+        $personal_sanitario->user_id = $user->id;
+        $personal_sanitario->save();
+        session()->flash('success', 'Personal Sanitario creado correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
+        return redirect()->route('personal_sanitarios.index');
+
+
+
+
+
     }
 
     /**
@@ -64,6 +93,14 @@ class PersonalSanitarioController extends Controller
     public function show(PersonalSanitario $personalSanitario)
     {
         //
+
+        //DUDA -> pk en el show se le pasa el listado de cargos y profesiones (profesional_sanitario)
+
+        $cargos = Cargo::all();
+        $profesiones = Profesion::all();
+        return view('personal_sanitarios/show', ['personal_sanitario' => $personalSanitario, 'cargos' => $cargos,
+         'profesiones' => $profesiones]);
+
     }
 
     /**
@@ -74,7 +111,10 @@ class PersonalSanitarioController extends Controller
      */
     public function edit(PersonalSanitario $personalSanitario)
     {
-        //
+        $cargos = Cargo::all();
+        $profesiones = Profesion::all();
+        return view('personal_sanitarios/edit', ['personal_sanitario' => $personalSanitario, 'cargos' => $cargos,
+         'profesiones' => $profesiones]);
     }
 
     /**
@@ -87,6 +127,26 @@ class PersonalSanitarioController extends Controller
     public function update(UpdatePersonalSanitarioRequest $request, PersonalSanitario $personalSanitario)
     {
         //
+
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed|min:8',
+            'telefono' => 'required|integer|digits:9',
+            'cargo_id' => 'required|exists:cargos,id',
+            'profesion_id' => 'required|exists:profesions,id',
+        ]);
+
+        // personalSanitario--> personal_sanitario
+        //DUDA 
+        $user = $personalSanitario->user;
+        $user->fill($request->all());
+        $user->save();
+        $personalSanitario->fill($request->all());
+        $personalSanitario->save();
+        session()->flash('success', 'Personal Sanitario creado correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
+        return redirect()->route('personal_sanitarios.index');
+
     }
 
     /**
@@ -97,6 +157,12 @@ class PersonalSanitarioController extends Controller
      */
     public function destroy(PersonalSanitario $personalSanitario)
     {
-        //
+        if($personalSanitario->delete()) {
+            session()->flash('success', 'Personal Sanitario borrado correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
+        }
+        else{
+            session()->flash('warning', 'El personal sanitario no pudo borrarse. Es probable que se deba a que tenga asociada información como citas que dependen de él.');
+        }
+        return redirect()->route('personal_sanitarios.index');
     }
 }
