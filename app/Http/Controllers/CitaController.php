@@ -15,6 +15,7 @@ class CitaController extends Controller
 
     public function __construct()
     {
+        // aqui esta asociado el policies de citas
         $this->authorizeResource(Cita::class, 'cita');
     }
 
@@ -23,6 +24,8 @@ class CitaController extends Controller
         $citas = Cita::orderBy('fecha_hora', 'desc')->paginate(25);
         if(Auth::user()->tipo_usuario_id == 1){
             $citas = Auth::user()->medico->citas()->orderBy('fecha_hora', 'desc')->paginate(25);
+            // auth::user() --> cogeme la instancia de usuario que ha logueado
+            //paginate es el metodo terminal
         }
         elseif(Auth::user()->tipo_usuario_id == 2){
             $citas = Auth::user()->paciente->citas()->orderBy('fecha_hora', 'desc')->paginate(25);
@@ -36,6 +39,7 @@ class CitaController extends Controller
         $pacientes = Paciente::all();
         if(Auth::user()->tipo_usuario_id == 1){
             return view('citas/create', ['medico' => Auth::user()->medico, 'pacientes' => $pacientes]);
+            //si soy un paciente solo puedo seleccionar pacientes ( el medico evidentemente soy yo (el que esta logueando))
         }
         elseif(Auth::user()->tipo_usuario_id == 2) {
             return view('citas/create', ['paciente' => Auth::user()->paciente, 'medicos' => $medicos]);
@@ -49,6 +53,8 @@ class CitaController extends Controller
             'fecha_hora' => 'required|date|after:yesterday',
             'medico_id' => 'required|exists:medicos,id',
         ];
+
+        // validaciones personalizadas a cada usuario
         if(Auth::user()->tipo_usuario_id == 2){
             $reglas_paciente = ['paciente_id' => ['required', 'exists:pacientes,id', Rule::in(Auth::user()->paciente->id)]];
             $reglas = array_merge($reglas_paciente, $reglas);
@@ -116,6 +122,10 @@ class CitaController extends Controller
         return redirect()->route('citas.index');
     }
 
+
+
+    // PARA LOS N:N
+
     public function attach_medicamento(Request $request, Cita $cita)
     {
         $this->validateWithBag('attach',$request, [
@@ -125,6 +135,8 @@ class CitaController extends Controller
             'comentarios' => 'nullable|string',
             'tomas_dia' => 'required|numeric|min:0',
         ]);
+
+        //creo instancias de medicamentos 
         $cita->medicamentos()->attach($request->medicamento_id, [
             'inicio' => $request->inicio,
             'fin' => $request->fin,

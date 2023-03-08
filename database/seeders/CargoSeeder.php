@@ -22,11 +22,9 @@ class CargoSeeder extends Seeder
                 'nombre' => "Dirección",
             ],
             [
-                'nombre' => "Jefe de Residentes",
+                'nombre' => "Profesional Normal",
             ],
-            [
-                'nombre' => "Residente",
-            ],
+           
         ]);
     }
 }

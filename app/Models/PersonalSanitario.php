@@ -40,6 +40,8 @@ class PersonalSanitario extends Model
     #/////////////////// QUERYS ---> cunsultas usando el ORM de eloquence
 
     public function getTiempoTrabajado(){
+// me gusstaria hacerlo en el ultimo mes
+
         $accesos= $this-> accesos_centro()->get();
         $res=0;
         foreach ($accesos as $acceso) {
@@ -59,7 +61,7 @@ class PersonalSanitario extends Model
     }
 
     public function getCargo(){
-        return $this-> cargo()->all();
+        return $this-> cargo()->nombre;
     }
 
 

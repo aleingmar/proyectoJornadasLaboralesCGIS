@@ -15,7 +15,24 @@ class AccesoCentroController extends Controller
      */
     public function index()
     {
-        //
+        // si soy direccion
+        $accesos = AccesoCentro::orderBy('entrada', 'desc')->paginate(25);
+
+        //si soy jefe de guardia enfermero veo todo lo de los enfermeros
+
+        if(Auth::user()->tipo_usuario_id == 1){
+            $accesos = AccesoCentro::join('personal_sanitarios', 'acceso_centros.personal_sanitario_id', 'personal_sanitarios.id')
+            ->select('acceso_centros.*')
+            ->where('personal_sanitarios.cargo_id', 1)
+            ->where('personal_sanitarios.profesion_id', 1)
+            ->paginate(25);
+           
+            // auth::user() --> cogeme la instancia de usuario que ha logueado
+            //paginate es el metodo terminal
+        }
+       
+
+       
     }
 
     /**

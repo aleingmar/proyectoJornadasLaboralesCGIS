@@ -8,6 +8,9 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CitaPolicy
 {
+
+
+
     use HandlesAuthorization;
 
     /**
@@ -19,6 +22,9 @@ class CitaPolicy
 
     public function viewAny(User $user)
     {
+
+        //se le asocia al index() el metodo de controlador
+
         return true;
     }
 
@@ -31,6 +37,9 @@ class CitaPolicy
      */
     public function view(User $user, Cita $cita)
     {
+        // quien puede ver el detalle de una cita?? 
+        //dejo ver o al admin o al paciente de esa cita o al medico de esa cita 
+
         return $user->tipo_usuario_id == 3 || ($user->tipo_usuario_id == 2 && $cita->paciente_id == $user->paciente->id) || ($user->tipo_usuario_id == 1 && $cita->medico_id == $user->medico->id);
     }
 
@@ -43,6 +52,8 @@ class CitaPolicy
 
     public function create(User $user)
     {
+
+        // todo el mundo puede ver una cita
         return true;
     }
 
@@ -55,6 +66,8 @@ class CitaPolicy
      */
     public function update(User $user, Cita $cita)
     {
+
+
         return $user->tipo_usuario_id == 3 || ($user->tipo_usuario_id == 2 && $cita->paciente_id == $user->paciente->id) || ($user->tipo_usuario_id == 1 && $cita->medico_id == $user->medico->id);
     }
 
@@ -100,11 +113,17 @@ class CitaPolicy
 
     public function attach_medicamento(User $user, Cita $cita)
     {
+
+        //sirve para las relaciones n:n --> añadir medicamentos a una cita (añadir fila a la tabla intermedia)
+
         return $user->tipo_usuario_id == 3 || ($user->tipo_usuario_id == 1 && $cita->medico_id == $user->medico->id);
     }
 
     public function detach_medicamento(User $user, Cita $cita)
     {
+
+        // quitar fila de la tabla intemedia
+        
         return $user->tipo_usuario_id == 3 || ($user->tipo_usuario_id == 1 && $cita->medico_id == $user->medico->id);
     }
 }

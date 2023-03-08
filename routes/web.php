@@ -42,15 +42,30 @@ Route::middleware(['auth', 'tipo_usuario:3'])->group(function () {
     ]);
 });
 
+
+//CITAS
+
+
 //Tanto los médicos como los administradores pueden editar el médico y trabajar con los medicamentos de las citas
-Route::middleware(['auth', 'tipo_usuario:1,3'])->group(function () {
+
+
+Route::middleware(['auth', 'tipo_usuario:1,3'])->group(function () { // le paso los dos tipos de middleware esos
+    // kernel php , asocial tipo_usuario a la clase de middleware ISTIPOUSUARIO
+    //le paso al middleware 1 y 3
+    // este middleware hace lo mismo practicamente que la policies
+
+    //auth es si el usuario esta logueado o no, si esta logueado next si no pasa al principio
+
     Route::get('/medicos/{medico}/edit', [MedicoController::class, 'edit'])->name('medicos.edit');
     Route::put('/medicos/{medico}', [MedicoController::class, 'update'])->name('medicos.update');
     //Dos rutas que tienen además un middleware con un Policy para hilar fino
-    Route::post('/citas/{cita}/attach-medicamento', [CitaController::class, 'attach_medicamento'])
+
+    // se le pasa entre {} con el nombre del modelo en minuscula 
+
+    Route::post('/citas/{cita}/attach-medicamento', [CitaController::class, 'attach_medicamento']) //añadir medicamento a la cita
         ->name('citas.attachMedicamento')
-        ->middleware('can:attach_medicamento,cita');
-    Route::delete('/citas/{cita}/detach-medicamento/{medicamento}', [CitaController::class, 'detach_medicamento'])
+        ->middleware('can:attach_medicamento,cita'); //can significa: usa la policies (antes de llegar al controlaodr )
+    Route::delete('/citas/{cita}/detach-medicamento/{medicamento}', [CitaController::class, 'detach_medicamento']) //quitar medicamento a la cita
         ->name('citas.detachMedicamento')
         ->middleware('can:detach_medicamento,cita');
 });
