@@ -15,13 +15,13 @@ class CargoSeeder extends Seeder
     public function run()
     {
          DB::table('cargos')->insert([
-            [
+            [ //este será el id=1
                 'nombre' => "Jefe de Guardia",
             ],
             [
                 'nombre' => "Dirección",
             ],
-            [
+            [ //id= 3
                 'nombre' => "Profesional Normal",
             ],
            

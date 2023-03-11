@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+#use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,9 +48,20 @@ class User extends Authenticatable
         return $this->hasOne(PersonalSanitario::class);
     }
 
-    
+    public function personal_sanitario()
+    {
+        return $this->hasOne(PersonalSanitario::class);
+    }
 
- 
+    public function cargo(){
+        return $this->hasManyThrough(Cargo::class, PersonalSanitario::class);
+    }
+
+    public function profesion(){
+        return $this->hasManyThrough(Profesion::class, PersonalSanitario::class);
+    }
+
+    
 
 
     # DUDA
