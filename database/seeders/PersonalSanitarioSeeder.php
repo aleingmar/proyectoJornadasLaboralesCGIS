@@ -18,14 +18,19 @@ class PersonalSanitarioSeeder extends Seeder
         //las tablas se llaman como los modelos pero con una s mas 
         DB::table('personal_sanitarios')->insert([
             [
-                'profesion' => "Médico",
-                'cargo' => 'Jefe de Guardia',
+                'profesion_id' => 2,
+                'cargo_id' => 2,
                 'user_id' => 1
             ],
             [
-                'profesion' => "Enfermero",
-                'cargo' => 'Jefe de Guardia',
+                'profesion_id' => 2,
+                'cargo_id' => 1,
                 'user_id' => 2
+            ],
+            [
+                'profesion_id' => 1,
+                'cargo_id' => 1,
+                'user_id' => 3
             ],
         ]);
 

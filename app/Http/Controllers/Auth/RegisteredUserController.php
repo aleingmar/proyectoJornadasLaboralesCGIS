@@ -27,10 +27,10 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
-    public function create_medico()
+    public function create_personal_sanitario()
     {
-        $especialidads = Especialidad::all();
-        return view('auth.register-medico', ['especialidads' => $especialidads]);
+        $personal = PersonalSanitario::all();
+        return view('auth.register-personal_sanitario', ['personal_sanitarios' => $personal]);
     }
 
     /**
@@ -41,51 +41,40 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+
+
     public function store(Request $request)
     {
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
-            'tipo_usuario_id' => 'required|numeric'
+            'telefono' => 'required|integer|digits:9',
         ];
 
-        $tipo_usuario_id = intval($request->tipo_usuario_id);
-        if($tipo_usuario_id == 1){
-            //Médico
-            $reglas_medico = ['fecha_contratacion' => 'required|date',
-                'vacunado' => 'required|boolean',
-                'sueldo' => 'required|numeric',
-                'especialidad_id' => 'required|exists:especialidads,id'
-            ];
-            $rules = array_merge($reglas_medico, $rules);
-        }
-        elseif($tipo_usuario_id == 2){
-            //Paciente
-            $reglas_paciente = ['nuhsa' => ['required', 'string', 'max:12', 'min:12', new Nuhsa()]];
-            $rules = array_merge($reglas_paciente, $rules);
-        }
+       
         $request->validate($rules);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'telefono' => $request->telefono,
         ]);
-        if($tipo_usuario_id == 1) {
-            //Médico
-            $medico = new Medico($request->all());
-            $medico->user_id = $user->id;
-            $medico->save();
-        }
-        elseif($tipo_usuario_id == 2){
-            //Paciente
-            $paciente = new Paciente($request->all());
-            $paciente->user_id = $user->id;
-            $paciente->save();
-        }
+
+
+        
+        $personal = new PersonalSanitario($request->all());
+        $personal->user_id = $user->id;
+        $personal->save();
+        
+        
         $user->fresh();
         Auth::login($user);
         event(new Registered($user));
         return redirect(RouteServiceProvider::HOME);
     }
+
+
+    
 }

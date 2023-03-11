@@ -19,6 +19,7 @@ class PersonalSanitarioPolicy
     public function viewAny(User $user)
     {
         //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -31,6 +32,7 @@ class PersonalSanitarioPolicy
     public function view(User $user, PersonalSanitario $personalSanitario)
     {
         //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -42,6 +44,7 @@ class PersonalSanitarioPolicy
     public function create(User $user)
     {
         //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -54,6 +57,7 @@ class PersonalSanitarioPolicy
     public function update(User $user, PersonalSanitario $personalSanitario)
     {
         //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -66,6 +70,7 @@ class PersonalSanitarioPolicy
     public function delete(User $user, PersonalSanitario $personalSanitario)
     {
         //
+        return $user->cargo()->id == 2;
     }
 
     /**

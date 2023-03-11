@@ -19,6 +19,7 @@ class ProfesionPolicy
     public function viewAny(User $user)
     {
         //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -31,6 +32,7 @@ class ProfesionPolicy
     public function view(User $user, Profesion $profesion)
     {
         //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -42,6 +44,7 @@ class ProfesionPolicy
     public function create(User $user)
     {
         //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -54,6 +57,7 @@ class ProfesionPolicy
     public function update(User $user, Profesion $profesion)
     {
         //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -66,7 +70,23 @@ class ProfesionPolicy
     public function delete(User $user, Profesion $profesion)
     {
         //
+        return $user->cargo()->id == 2;
     }
+
+
+
+
+
+
+
+
+
+
+    ///////////////////////////////////////////////////////////////////
+
+
+
+
 
     /**
      * Determine whether the user can restore the model.

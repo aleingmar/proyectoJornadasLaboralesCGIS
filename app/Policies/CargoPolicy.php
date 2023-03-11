@@ -18,7 +18,8 @@ class CargoPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        //solo los de direccion pueden ver los cargos
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -30,7 +31,7 @@ class CargoPolicy
      */
     public function view(User $user, Cargo $cargo)
     {
-        //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -41,7 +42,7 @@ class CargoPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -53,7 +54,7 @@ class CargoPolicy
      */
     public function update(User $user, Cargo $cargo)
     {
-        //
+        return $user->cargo()->id == 2;
     }
 
     /**
@@ -65,8 +66,21 @@ class CargoPolicy
      */
     public function delete(User $user, Cargo $cargo)
     {
-        //
+        return $user->cargo()->id == 2;
     }
+
+
+
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 
     /**
      * Determine whether the user can restore the model.

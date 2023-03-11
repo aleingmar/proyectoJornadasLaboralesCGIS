@@ -8,6 +8,13 @@ use App\Models\AccesoCentro;
 
 class AccesoCentroController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(AccesoCentro::class, 'cita');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +29,7 @@ class AccesoCentroController extends Controller
         }
 
         //auth es coger la info de la persona que ha iniciado secion
+
         //si soy jefe de guardia enfermero veo todo lo de los enfermeros
 
         if(Auth::user()->cargo()->id == 1 & Auth::user()->profesion()->id == 1){
@@ -41,7 +49,9 @@ class AccesoCentroController extends Controller
             //paginate es el metodo terminal
         }
 
-        //si soy jefe de guardia enfermero veo todo lo de los enfermeros
+
+
+        //si soy jefe de guardia medicos veo todo lo de los medicos
 
         if(Auth::user()->cargo()->id == 1 & Auth::user()->profesion()->id == 2){
 
@@ -53,7 +63,7 @@ class AccesoCentroController extends Controller
            
         }
        
-        // si soy un profesional normal
+        // si soy un profesional normal, veo solo mis accesos
 
         if(Auth::user()->cargo()->id == 3 ){
             

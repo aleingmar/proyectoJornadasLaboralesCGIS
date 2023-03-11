@@ -23,7 +23,8 @@ class PersonalSanitarioController extends Controller
      */
     public function index()
     {
-        //
+        // solo llegan hasta aqui los usuarios de direccion
+
         $personal_sanitarios = PersonalSanitario::paginate(25);
         return view('/personal_sanitarios/index', ['personal_sanitarios' => $personal_sanitarios]);
 
@@ -37,7 +38,7 @@ class PersonalSanitarioController extends Controller
      */
     public function create()
     {
-        //
+        // solo direccion
         $cargos = Cargo::all();
         $profesiones = Profesion::all();
         return view('personal_sanitarios/create', ['cargos' => $cargos, 'profesiones' => $profesiones]);
@@ -165,4 +166,14 @@ class PersonalSanitarioController extends Controller
         }
         return redirect()->route('personal_sanitarios.index');
     }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+//direccion pueda filtrar el personal dependiendo de la profesion.
+
+public function index_filtraProfesion()
+{
+
 }

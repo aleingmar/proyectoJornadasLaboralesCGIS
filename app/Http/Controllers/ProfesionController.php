@@ -8,6 +8,16 @@ use App\Models\Profesion;
 
 class ProfesionController extends Controller
 {
+
+    public function __construct()
+    {   // aqui esta asociado el policies 
+        $this->authorizeResource(Profesion::class, 'profesion');
+    }
+
+
+
+
+
     /**
      * Display a listing of the resource.
      *

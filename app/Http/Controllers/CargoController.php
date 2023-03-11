@@ -8,6 +8,14 @@ use App\Models\Cargo;
 
 class CargoController extends Controller
 {
+
+    public function __construct()
+    {   // aqui esta asociado el policies 
+        $this->authorizeResource(Cargo::class, 'cargo');
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -39,9 +47,11 @@ class CargoController extends Controller
     {
         $this->validate($request, [
             'nombre' => 'required|string|max:255',
-        ], [
+        ], 
+        [
             'nombre.required' => 'El cargo es obligatoria',
         ]);
+
         $cargo = new Cargo($request->all());
         $cargo->save();
         session()->flash('success', 'Cargo creada correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');
@@ -82,8 +92,8 @@ class CargoController extends Controller
     {
         $this->validate($request, [
             'nombre' => 'required|string|max:255',
-       ],
-        )
+       ],)
+       
        $cargo->fill($request->all());
        $cargo->save();
        session()->flash('success', 'Cargo modificada correctamente. Si nos da tiempo haremos este mensaje internacionalizable y parametrizable');

@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'telefono'
+        'telefono',
     ];
 
     /**
@@ -43,15 +43,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function personal_sanitario()
-    {
+    public function personal_sanitario(){
         return $this->hasOne(PersonalSanitario::class);
     }
 
-    public function personal_sanitario()
-    {
-        return $this->hasOne(PersonalSanitario::class);
-    }
 
     public function cargo(){
         return $this->hasManyThrough(Cargo::class, PersonalSanitario::class);
@@ -78,11 +73,6 @@ class User extends Authenticatable
 
     //no estoy seguro de si es personal_sanitario()->cargo() o personal_sanitario()::cargo()
     
-    public function getTipoUsuarioAttribute(){ //cargo
-
-        return $this->personal_sanitario()->cargo()->nombre;
- 
-     }
 
 
     

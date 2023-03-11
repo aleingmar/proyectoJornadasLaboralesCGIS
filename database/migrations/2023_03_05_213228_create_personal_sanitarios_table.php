@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('profesion_id')->nullable()->constrained()->onDelete('set null');
             #$table->enum('profesion', ['Médico', 'Enfermero']);
             #$table->enum('cargo', ['Jefe de Guardia', 'Residente', 'Especialista', 'Dirección']);
-            $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->unique()->constrained()->onDelete('set null');
             $table->softDeletes();
 
 
