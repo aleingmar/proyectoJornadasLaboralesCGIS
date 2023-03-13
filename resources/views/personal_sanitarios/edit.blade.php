@@ -7,11 +7,11 @@
                 <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
               </li> --}}
               <li class="flex items-center">
-                <a href="{{ route('medicos.index') }}">{{__('Médicos')}}</a>
+                <a href="{{ route('personal_sanitarios.index') }}">{{__('Médicos')}}</a>
                 <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
               </li>
               <li>
-                <a href="#" class="text-gray-500" aria-current="page">{{__('Editar')}} {{$medico->user->name}}</a>
+                <a href="#" class="text-gray-500" aria-current="page">{{__('Editar')}} {{$personal_sanitario->user->name}}</a>
               </li>
             </ol>
           </nav>
@@ -26,20 +26,24 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                         <!-- Validation Errors -->
                         <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                        <form method="POST" action="{{ route('medicos.update', $medico->id) }}">
+                        <form method="POST" action="{{ route('personal_sanitarios.update', $personal_sanitario->id) }}">
                             @csrf
                             @method('put')
+
+
                             <div>
                                 <x-label for="name" :value="__('Nombre')" />
 
-                                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$medico->user->name" required autofocus />
+                                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$personal_sanitario->user->name" required autofocus />
                             </div>
+
+
 
                             <!-- Email Address -->
                             <div class="mt-4">
                                 <x-label for="email" :value="__('Email')" />
 
-                                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="$medico->user->email" required />
+                                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="$personal_sanitario->user->email" required />
                             </div>
 
                             {{-- <!-- Password -->
@@ -61,48 +65,41 @@
                                                 name="password_confirmation" required />
                             </div> --}}
 
-                            <div class="mt-4">
-                                <x-label for="fecha_contratacion" :value="__('Fecha contratación')" />
-
-                                <x-input id="fecha_contratacion" class="block mt-1 w-full"
-                                                type="date"
-                                                name="fecha_contratacion"
-                                                :value="$medico->fecha_contratacion->format('Y-m-d')"
-                                                required />
-                            </div>
-
-                            <div class="mt-4">
-                                <x-label for="vacunado" :value="__('Vacunado')" />
 
 
-                                <x-select id="vacunado" name="vacunado" required>
+                            
+
+                                <x-label for="cargo_id" :value="__('cargo')" />
+
+
+                                <x-select id="cargo_id" name="cargo_id" required>
                                     <option value="">{{__('Elige una opción')}}</option>
-                                    <option value="1" @if ($medico->vacunado) selected @endif>{{__('Sí')}}</option>
-                                    <option value="0" @if (!$medico->vacunado) selected @endif>{{__('No')}}</option>
-                                </x-select>
-                            </div>
-
-                            <div class="mt-4">
-                                <x-label for="sueldo" :value="__('Sueldo')" />
-
-                                <x-input id="sueldo" class="block mt-1 w-full" min="0" step="1" type="number" name="sueldo" :value="$medico->sueldo" required />
-                            </div>
-
-                            <div class="mt-4">
-                                <x-label for="especialidad_id" :value="__('Especialidad')" />
-
-
-                                <x-select id="especialidad_id" name="especialidad_id" required>
-                                    <option value="">{{__('Elige una opción')}}</option>
-                                    @foreach ($especialidads as $especialidad)
-                                    <option value="{{$especialidad->id}}" @if ($medico->especialidad_id == $especialidad->id) selected @endif>{{$especialidad->nombre}}</option>
+                                    @foreach ($cargos as $cargo)
+                                    <option value="{{$cargo->id}}" @if ($personal_sanitario->cargo_id == $cargo->id) selected @endif>{{$cargo->nombre}}</option>
                                     @endforeach
                                 </x-select>
                             </div>
 
+
+
+
+
+                                <x-label for="profesion_id" :value="__('profesion')" />
+
+
+                                <x-select id="profesion_id" name="profesion_id" required>
+                                    <option value="">{{__('Elige una opción')}}</option>
+                                    @foreach ($profesiones as $profesion)
+                                    <option value="{{$profesion->id}}" @if ($personal_sanitario->profesion_id == $profesion->id) selected @endif>{{$profesion->nombre}}</option>
+                                    @endforeach
+                                </x-select>
+                            </div>
+
+
+
                             <div class="flex items-center justify-end mt-4">
-                                <x-button type="button" class="bg-red-800 hover:bg-red-700">
-                                    <a href={{\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 3 ? route('medicos.index') :  url()->previous()}}>
+                            <x-button type="button" class="bg-red-800 hover:bg-red-700">
+                                    <a href={{route('personal_sanitarios.index')}}>
                                     {{ __('Cancelar') }}
                                     </a>
                                 </x-button>

@@ -18,19 +18,46 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
+
+
 Route::middleware(['auth'])->group(function () {
     Route::resources([
         //No pongo medicos como route resource porque voy a añadirle middlewares diferentes
         //'medicos' => MedicoController::class,
-        'citas' => CitaController::class,
-        'especialidads' => EspecialidadController::class,
-        'pacientes' => PacienteController::class,
+
+        //ASOCIO EL CRUD DE ESTAS ENTIDADES CON SUS CONTROLADORES
+        'acceso_centros' => AccesoCentroController::class,
+        'cargos' => CargoController::class,
+        'profesions' => ProfesionController::class,
+        'personal_sanitarios' => PersonalSanitarioController::class,
     ]);
-    Route::get('/pacientes-hoy', [PacienteController::class, 'pacientesHoy']);
+
+
+    //Route::get('/pacientes-hoy', [PacienteController::class, 'pacientesHoy']);
     //Todos los usuarios pueden listar y ver el detalle de un médico
-    Route::get('/medicos', [MedicoController::class, 'index'])->name('medicos.index');
-    Route::get('/medicos/{medico}', [MedicoController::class, 'show'])->name('medicos.show');
+    //Route::get('/medicos', [MedicoController::class, 'index'])->name('medicos.index');
+    //Route::get('/medicos/{medico}', [MedicoController::class, 'show'])->name('medicos.show');
+
 });
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//     NO SIRVE CREO
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// HACE MAS COSAS PARA USAR EL MIDDLEWARE DE IS TIPO DE USUARIO PERO ES EXACTAMENTE LO MISMO QUE LAS POLICIES
+// YO NO LO GENGO QUE USAR
+
+
+
+
+
+
 
 //Solo los administradores pueden crear y borrar médicos, así como trabajar con el CRUD de Medicamentos
 Route::middleware(['auth', 'tipo_usuario:3'])->group(function () {
